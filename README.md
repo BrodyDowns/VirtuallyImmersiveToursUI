@@ -5,7 +5,7 @@ This project will design and implement a user navigation interface to augment th
 
 ## Team Members:
 
-Last Name       | First Name       | GitHub User Name    | Scrum Role
---------------- | ---------------- | ------------------- | ---------------
-Downs           | Brody            | BrodyDowns          | Scrum Master
-Macomb          | Ben              | benmacomb           | Product Owner
+Last Name       | First Name       | GitHub User Name    
+--------------- | ---------------- | ------------------- 
+Downs           | Brody            | BrodyDowns         
+Macomb          | Ben              | benmacomb           
