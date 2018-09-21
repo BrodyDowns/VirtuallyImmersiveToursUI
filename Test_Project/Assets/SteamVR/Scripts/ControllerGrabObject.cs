@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/* Class that allows controller to interact with objects
+   Source: https://www.raywenderlich.com/792-htc-vive-tutorial-for-unity
+*/
 public class ControllerGrabObject : MonoBehaviour {
 
     private SteamVR_TrackedObject trackedObj;
