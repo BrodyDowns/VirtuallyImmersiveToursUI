@@ -10,6 +10,7 @@ public class VRTouchpadMove : MonoBehaviour {
     private Transform rig;
     private Valve.VR.EVRButtonId touchpad = Valve.VR.EVRButtonId.k_EButton_SteamVR_Touchpad;
     private SteamVR_TrackedObject trackedObj;
+    public float speed = 1f;
 
     private SteamVR_Controller.Device controller {
         get {
@@ -39,7 +40,7 @@ public class VRTouchpadMove : MonoBehaviour {
 
             if (rig != null) {
                 float currentY = rig.position.y;
-                rig.position += (transform.right * axis.x + transform.forward * axis.y) * Time.deltaTime;
+                rig.position += (transform.right * axis.x + transform.forward * axis.y) * Time.deltaTime * speed;
                 rig.position = new Vector3(rig.position.x, currentY, rig.position.z);
             }
         }

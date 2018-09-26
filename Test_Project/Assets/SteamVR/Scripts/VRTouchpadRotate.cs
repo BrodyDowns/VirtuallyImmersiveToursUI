@@ -10,6 +10,7 @@ public class VRTouchpadRotate : MonoBehaviour
     private Transform rig;
     private Valve.VR.EVRButtonId touchpad = Valve.VR.EVRButtonId.k_EButton_SteamVR_Touchpad;
     private SteamVR_TrackedObject trackedObj;
+    public float speed = 1f;
 
     private SteamVR_Controller.Device controller
     {
@@ -46,7 +47,7 @@ public class VRTouchpadRotate : MonoBehaviour
             {     
                 var cameraObj = GameObject.Find("Camera (eye)");
                 rig.RotateAround(cameraObj.transform.position,
-                                 new Vector3(0,axis.x, 0), 20f * Time.deltaTime);          
+                                 new Vector3(0,axis.x, 0), 20f * Time.deltaTime * speed);          
             }
         }
     }
