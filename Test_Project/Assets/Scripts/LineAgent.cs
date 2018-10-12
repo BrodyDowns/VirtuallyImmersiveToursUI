@@ -19,7 +19,7 @@ public class LineAgent : MonoBehaviour {
         lineRenderer.material = material;
 		path = new UnityEngine.AI.NavMeshPath();
         UnityEngine.AI.NavMesh.CalculatePath(transform.position, target.position, UnityEngine.AI.NavMesh.AllAreas, path);
-        lineRenderer.SetVertexCount(path.corners.Length);
+        lineRenderer.positionCount = path.corners.Length;
         lineRenderer.SetPositions(path.corners);
         elapsed = 0.0f;
 	}
@@ -33,7 +33,7 @@ public class LineAgent : MonoBehaviour {
             elapsed -= 1.0f;
         }
 
-
+        lineRenderer.material = material;
 
 
         Vector3[] vectors = new Vector3[path.corners.Length];
@@ -46,9 +46,8 @@ public class LineAgent : MonoBehaviour {
             j++;
         }
 
-            UnityEngine.AI.NavMesh.CalculatePath(transform.position, target.position, UnityEngine.AI.NavMesh.AllAreas, path);
-             lineRenderer.SetVertexCount(path.corners.Length);
-
+        UnityEngine.AI.NavMesh.CalculatePath(transform.position, new Vector3(target.position.x, 0, target.position.z), UnityEngine.AI.NavMesh.AllAreas, path);
+        lineRenderer.positionCount = path.corners.Length;
         lineRenderer.SetPositions(vectors);
 
         for (int i = 0; i < path.corners.Length - 1; i++)
