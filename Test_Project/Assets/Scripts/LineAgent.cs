@@ -22,11 +22,6 @@ public class LineAgent : MonoBehaviour {
         lineRenderer.positionCount = path.corners.Length;
         lineRenderer.SetPositions(path.corners);
         elapsed = 0.0f;
-
-        if (terrain != null) {
-            
-        }
-
 	}
 	
 	// Update is called once per frame
@@ -34,28 +29,30 @@ public class LineAgent : MonoBehaviour {
 
         //Calculate path
         UnityEngine.AI.NavMesh.CalculatePath(transform.position, target.position, UnityEngine.AI.NavMesh.AllAreas, path);
+        
         //If there's a terrain
         //Create many points between the first two path corners
         if (terrain != null) {
 
+            int totalPoints = 0;
             for (int i = 1; i < path.corners.Length; i++) {
+
                 Vector3 point1 = path.corners[i - 1];
                 Vector3 point2 = path.corners[i];
                 float distance = Vector3.Distance(point1, point2);
-                Vector3 distVec = point1 - point2;
-                distVec.Normalize();
-                for (int j = 0; j < distance; j++) {
-                    Vector3 newPoint = point1 + (j * distVec);
-                    Debug.Log(newPoint.ToString());
-
+        
+                for (int j = 0; j < (int)distance; j++) {
+                    totalPoints++;
+                    Vector3 newPoint = Vector3.Lerp(point1, point2, (float)j / distance);
+                    float height = terrain.SampleHeight(newPoint);
+                    newPoint.y = height;
+                    lineRenderer.positionCount = totalPoints;
+                    lineRenderer.SetPosition(totalPoints - 1, newPoint);
                 }
-                //Debug.Log(distance);
-
             }
-
+        } else {
+            lineRenderer.positionCount = path.corners.Length;
+            lineRenderer.SetPositions(path.corners);
         }
-        lineRenderer.positionCount = path.corners.Length;
-        lineRenderer.SetPositions(path.corners);
-
     }
 }
