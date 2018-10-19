@@ -5,12 +5,12 @@ using UnityEngine;
 public class LineAgent : MonoBehaviour {
 
 	public Transform target;
+    public Terrain terrain;
     private LineRenderer lineRenderer;
     private UnityEngine.AI.NavMeshPath path;
     private float elapsed = 0.0f;
     public float lineHeight = 0.25f;
     public Material material;
-
 	// Use this for initialization
 	void Start () {
         lineRenderer = gameObject.AddComponent<LineRenderer>() as LineRenderer;
@@ -22,36 +22,40 @@ public class LineAgent : MonoBehaviour {
         lineRenderer.positionCount = path.corners.Length;
         lineRenderer.SetPositions(path.corners);
         elapsed = 0.0f;
+
+        if (terrain != null) {
+            
+        }
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		// Update the way to the goal every second.
-        elapsed += Time.deltaTime;
-        if (elapsed > 1.0f)
-        {
-            elapsed -= 1.0f;
+
+        //Calculate path
+        UnityEngine.AI.NavMesh.CalculatePath(transform.position, target.position, UnityEngine.AI.NavMesh.AllAreas, path);
+        //If there's a terrain
+        //Create many points between the first two path corners
+        if (terrain != null) {
+
+            for (int i = 1; i < path.corners.Length; i++) {
+                Vector3 point1 = path.corners[i - 1];
+                Vector3 point2 = path.corners[i];
+                float distance = Vector3.Distance(point1, point2);
+                Vector3 distVec = point1 - point2;
+                distVec.Normalize();
+                for (int j = 0; j < distance; j++) {
+                    Vector3 newPoint = point1 + (j * distVec);
+                    Debug.Log(newPoint.ToString());
+
+                }
+                //Debug.Log(distance);
+
+            }
+
         }
-
-        lineRenderer.material = material;
-
-
-        Vector3[] vectors = new Vector3[path.corners.Length];
-
-        int j = 0;
-        foreach (Vector3 v in path.corners)
-        {
-            vectors[j] = v;
-            vectors[j].y = vectors[j].y + lineHeight;
-            j++;
-        }
-
-        UnityEngine.AI.NavMesh.CalculatePath(transform.position, new Vector3(target.position.x, 0, target.position.z), UnityEngine.AI.NavMesh.AllAreas, path);
         lineRenderer.positionCount = path.corners.Length;
-        lineRenderer.SetPositions(vectors);
-
-        for (int i = 0; i < path.corners.Length - 1; i++)
-            Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.red);
+        lineRenderer.SetPositions(path.corners);
 
     }
 }
