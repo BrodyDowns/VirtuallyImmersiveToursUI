@@ -45,14 +45,18 @@ public class LineAgent : MonoBehaviour {
                     totalPoints++;
                     Vector3 newPoint = Vector3.Lerp(point1, point2, (float)j / distance);
                     float height = terrain.SampleHeight(newPoint);
-                    newPoint.y = height;
+                    newPoint.y = height + lineHeight;
                     lineRenderer.positionCount = totalPoints;
                     lineRenderer.SetPosition(totalPoints - 1, newPoint);
                 }
             }
         } else {
             lineRenderer.positionCount = path.corners.Length;
-            lineRenderer.SetPositions(path.corners);
+            for (int j = 0; j < path.corners.Length; j++) {
+                Vector3 newPoint = path.corners[j];
+                newPoint.y = newPoint.y + lineHeight;
+                lineRenderer.SetPosition(j, newPoint);
+            }
         }
     }
 }
