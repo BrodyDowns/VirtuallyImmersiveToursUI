@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/RandomScene2.unity
+    guid: b21fc32dcd5ff8b48946dffe74c92fdb
+  - enabled: 1
+    path: Assets/Scenes/SimpleStructures.unity
+    guid: 43724f7d79d62f14b9b1d3fec766f281
   m_configObjects: {}
