@@ -5,16 +5,25 @@ using UnityEngine.SceneManagement;
 public class Teleport : MonoBehaviour
 {
 	public string sceneName = "";
-    public GameObject player;
+	private Collider bubble;
+    
+    void Start() {
 
+		//Set sceneName to currently active scene if empty.
+		Scene currentScene = SceneManager.GetActiveScene();
+		if (sceneName == "") {
+			sceneName = currentScene.name;
+		}
+	}
+
+	//Load the scene associated with sceneName if collision occurs. 
     void OnTriggerEnter(Collider other)
     {
         StartCoroutine(LoadYourAsyncScene());  
     }
 
-    IEnumerator LoadYourAsyncScene() {
-
-        DontDestroyOnLoad(player);
+    IEnumerator LoadYourAsyncScene()
+    {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
 
         // Wait until the asynchronous scene fully loads
@@ -23,7 +32,7 @@ public class Teleport : MonoBehaviour
             yield return null;
         }
 		
-        SceneManager.MoveGameObjectToScene(player, SceneManager.GetSceneByName(sceneName));
+		// Set new active scene to switch scenes.
 		SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
     }
 }
