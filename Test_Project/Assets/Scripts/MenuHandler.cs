@@ -5,14 +5,14 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class MenuHandler : MonoBehaviour {
-    public GameObject leftController;
+    //public GameObject leftController;
     public GameObject rightController;
     public GameObject menu;
 
-    private SteamVR_LaserPointer leftLaserPointer;
+    //private SteamVR_LaserPointer leftLaserPointer;
     private SteamVR_LaserPointer rightLaserPointer;
 
-    private SteamVR_TrackedController leftTracked;
+    //private SteamVR_TrackedController leftTracked;
     private SteamVR_TrackedController rightTracked;
 
     bool menuState = false;
@@ -23,15 +23,15 @@ public class MenuHandler : MonoBehaviour {
         menu.SetActive(menuState);
 
         //set up laser pointers
-        leftLaserPointer = leftController.GetComponent<SteamVR_LaserPointer>();
+        //leftLaserPointer = leftController.GetComponent<SteamVR_LaserPointer>();
         rightLaserPointer = rightController.GetComponent<SteamVR_LaserPointer>();
 
         //left
-        leftLaserPointer.active = false;
-        leftLaserPointer.PointerIn -= HandlePointerIn;
-        leftLaserPointer.PointerIn += HandlePointerIn;
-        leftLaserPointer.PointerOut -= HandlePointerOut;
-        leftLaserPointer.PointerOut += HandlePointerOut;
+        //leftLaserPointer.active = false;
+        //leftLaserPointer.PointerIn -= HandlePointerIn;
+        //leftLaserPointer.PointerIn += HandlePointerIn;
+        //leftLaserPointer.PointerOut -= HandlePointerOut;
+        //leftLaserPointer.PointerOut += HandlePointerOut;
 
             //right
         rightLaserPointer.active = false;
@@ -41,11 +41,11 @@ public class MenuHandler : MonoBehaviour {
         rightLaserPointer.PointerOut += HandlePointerOut;
 
         //set up tracked controllers
-        leftTracked = leftController.GetComponent<SteamVR_TrackedController>();
-        if (leftTracked == null)
-        {
-            leftTracked = leftController.GetComponentInParent<SteamVR_TrackedController>();
-        }
+        //leftTracked = leftController.GetComponent<SteamVR_TrackedController>();
+        //if (leftTracked == null)
+        //{
+        //    leftTracked = leftController.GetComponentInParent<SteamVR_TrackedController>();
+        //}
 
         rightTracked = rightController.GetComponent<SteamVR_TrackedController>();
         if (rightTracked == null)
@@ -54,10 +54,10 @@ public class MenuHandler : MonoBehaviour {
         }
 
             //left
-        leftTracked.TriggerClicked -= HandleTriggerClicked;
-        leftTracked.TriggerClicked += HandleTriggerClicked;
-        leftTracked.MenuButtonClicked -= HandleMenuButton;
-        leftTracked.MenuButtonClicked += HandleMenuButton;
+        //leftTracked.TriggerClicked -= HandleTriggerClicked;
+        //leftTracked.TriggerClicked += HandleTriggerClicked;
+        //leftTracked.MenuButtonClicked -= HandleMenuButton;
+        //leftTracked.MenuButtonClicked += HandleMenuButton;
 
             //right
         rightTracked.TriggerClicked -= HandleTriggerClicked;
@@ -70,7 +70,7 @@ public class MenuHandler : MonoBehaviour {
     private void HandleMenuButton(object sender, ClickedEventArgs e)
     {
         menuState = !menuState;
-        leftLaserPointer.active = menuState;
+        //leftLaserPointer.active = menuState;
         rightLaserPointer.active = menuState;
 
         //Debug.Log(leftLaserPointer.active + " " + rightLaserPointer.active);
