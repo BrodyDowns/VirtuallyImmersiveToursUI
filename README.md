@@ -3,6 +3,12 @@
 ## Project Description
 This project will design and implement a user navigation interface to augment the redirected walking project in the visualization laboratory.
 
+Features Include:
+* User Movement Controls
+* Pathfinding Guidance Line
+* Scene Loading/Teleportation
+* Interactive Menu
+
 ## Team Members:
 
 Last Name       | First Name       | GitHub User Name    
