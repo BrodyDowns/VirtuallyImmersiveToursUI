@@ -13,9 +13,13 @@ public struct PointerEventArgs
 public delegate void PointerEventHandler(object sender, PointerEventArgs e);
 
 
+/*
+ * Edited version of the Steam VR plugins laser pointers
+ * */
+
 public class SteamVR_LaserPointer : MonoBehaviour
 {
-    public bool active = true;
+    public bool active = true; //Determines if lasers are on or off
     public Color color;
     public float thickness = 0.002f;
     public GameObject holder;
@@ -79,6 +83,7 @@ public class SteamVR_LaserPointer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //If button is active create laser pointers
         if (active)
         {
             if (!isActive)

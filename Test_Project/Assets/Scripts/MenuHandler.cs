@@ -4,17 +4,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+/* 
+ * Class that handles the Menu and Laser Pointers on Controllers
+ */
 public class MenuHandler : MonoBehaviour {
+    //Controller and Menu
     //public GameObject leftController;
     public GameObject rightController;
     public GameObject menu;
 
+    //Laser Pointer on Controller
     //private SteamVR_LaserPointer leftLaserPointer;
     private SteamVR_LaserPointer rightLaserPointer;
 
+    //Tracked Controller component on controller
     //private SteamVR_TrackedController leftTracked;
     private SteamVR_TrackedController rightTracked;
 
+    //Menu starts turned off
     bool menuState = false;
 
     private void OnEnable()
@@ -33,7 +41,7 @@ public class MenuHandler : MonoBehaviour {
         //leftLaserPointer.PointerOut -= HandlePointerOut;
         //leftLaserPointer.PointerOut += HandlePointerOut;
 
-            //right
+         //right
         rightLaserPointer.active = false;
         rightLaserPointer.PointerIn -= HandlePointerIn;
         rightLaserPointer.PointerIn += HandlePointerIn;
@@ -47,6 +55,7 @@ public class MenuHandler : MonoBehaviour {
         //    leftTracked = leftController.GetComponentInParent<SteamVR_TrackedController>();
         //}
 
+        
         rightTracked = rightController.GetComponent<SteamVR_TrackedController>();
         if (rightTracked == null)
         {
@@ -67,6 +76,7 @@ public class MenuHandler : MonoBehaviour {
 
     }
 
+    //Toggles menu and Laser pointer
     private void HandleMenuButton(object sender, ClickedEventArgs e)
     {
         menuState = !menuState;
@@ -79,15 +89,18 @@ public class MenuHandler : MonoBehaviour {
 
     }
 
+    //Handles Trigger being clicked
     private void HandleTriggerClicked(object sender, ClickedEventArgs e)
     {
        // Debug.Log("trigger clicked");
+        //activates button
         if (EventSystem.current.currentSelectedGameObject != null)
         {
             ExecuteEvents.Execute(EventSystem.current.currentSelectedGameObject, new PointerEventData(EventSystem.current), ExecuteEvents.submitHandler);
         }
     }
 
+    //Hover on
     private void HandlePointerIn(object sender, PointerEventArgs e)
     {
         var button = e.target.GetComponent<Button>();
@@ -98,6 +111,7 @@ public class MenuHandler : MonoBehaviour {
         }
     }
 
+    //Hover off
     private void HandlePointerOut(object sender, PointerEventArgs e)
     {
 
