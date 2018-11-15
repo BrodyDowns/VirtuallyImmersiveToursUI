@@ -28,8 +28,39 @@ public class LineAgent : MonoBehaviour {
 	void Update () {
 
         //Calculate path
-        UnityEngine.AI.NavMesh.CalculatePath(transform.position, target.position, UnityEngine.AI.NavMesh.AllAreas, path);
-        
+        Vector3 playerPos = new Vector3();
+        playerPos.y = target.position.y;
+        playerPos.x = target.position.x;
+        playerPos.z = target.position.z;
+        if (terrain != null)
+        {
+            playerPos.y = terrain.SampleHeight(target.position);
+            UnityEngine.AI.NavMesh.CalculatePath(transform.position, playerPos, UnityEngine.AI.NavMesh.AllAreas, path);
+        }
+        else
+        {
+            //checks 50 units up and down to see if it connect to path
+            UnityEngine.AI.NavMesh.CalculatePath(transform.position, playerPos, UnityEngine.AI.NavMesh.AllAreas, path);
+            int attempts = 0;
+            float originalY = playerPos.y;
+            while(path.corners.Length == 0 && attempts < 50)
+            {
+                playerPos.y += 1;
+                UnityEngine.AI.NavMesh.CalculatePath(transform.position, playerPos, UnityEngine.AI.NavMesh.AllAreas, path);
+                attempts++;
+            }
+            playerPos.y = originalY;
+            attempts = 0;
+            while (path.corners.Length == 0 && attempts < 50)
+            {
+                playerPos.y -= 1;
+                UnityEngine.AI.NavMesh.CalculatePath(transform.position, playerPos, UnityEngine.AI.NavMesh.AllAreas, path);
+                attempts++;
+            }
+
+        }
+       
+
         //If there's a terrain
         //Create many points between the first two path corners
         if (terrain != null) {
@@ -41,7 +72,7 @@ public class LineAgent : MonoBehaviour {
                 Vector3 point2 = path.corners[i];
                 float distance = Vector3.Distance(point1, point2);
         
-                for (int j = 0; j < (int)distance; j++) {
+                for (int j = 0; j < (int)distance*5; j++) {
                     totalPoints++;
                     Vector3 newPoint = Vector3.Lerp(point1, point2, (float)j / distance);
                     float height = terrain.SampleHeight(newPoint);
